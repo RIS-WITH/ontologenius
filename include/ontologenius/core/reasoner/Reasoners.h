@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-#include <pluginlib/class_loader.h>
+#include <pluginlib/class_loader.hpp>
 
 #include "ontologenius/core/ontoGraphs/Ontology.h"
 #include "ontologenius/core/reasoner/ConfigReader.h"
@@ -66,6 +66,8 @@ private:
 
   void applyConfig();
 
+  void computeUpdates();
+  template<typename B> void computeGraphUpdates(Graph<B>* graph);
   void computeIndividualsUpdates();
   void computeClassesUpdates();
   void computeIndividualsUpdatesPeriodic();

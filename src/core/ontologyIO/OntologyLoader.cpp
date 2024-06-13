@@ -12,8 +12,9 @@ namespace ontologenius {
 OntologyLoader::OntologyLoader(ClassGraph* class_graph,
                                ObjectPropertyGraph* object_property_graph,
                                DataPropertyGraph* data_property_graph,
-                               IndividualGraph* individual_graph) : owl_reader_(class_graph, object_property_graph, data_property_graph, individual_graph),
-                                                                    ttl_reader_(class_graph, object_property_graph, data_property_graph, individual_graph)
+                               IndividualGraph* individual_graph,
+                               AnonymousClassGraph* anonymous_graph) : owl_reader_(class_graph, object_property_graph, data_property_graph, individual_graph, anonymous_graph),
+                                                                    ttl_reader_(class_graph, object_property_graph, data_property_graph, individual_graph, anonymous_graph)
 {}
 
 OntologyLoader::OntologyLoader(Ontology& onto) : owl_reader_(onto), ttl_reader_(onto)
@@ -206,7 +207,7 @@ void OntologyLoader::loadImports(const std::vector<std::string>& imports)
     auto with_package = resolvePath(import);
     if(with_package.first != "")
     {
-      std::string path = findPackageRos1(with_package.first);
+      std::string path = findPackage(with_package.first);
       path += "/" + with_package.second;
 
       fixPath(path);
@@ -249,7 +250,7 @@ void OntologyLoader::loadImports(const std::vector<std::string>& imports)
 
 std::pair<std::string, std::string> OntologyLoader::resolvePath(const std::string& raw_path)
 {
-  std::vector<std::string> packages = listPackagesRos1();
+  std::vector<std::string> packages = listPackages();
 
   auto parts = split(raw_path, "/");
   for(auto part_it = parts.begin(); part_it != parts.end(); ++part_it)

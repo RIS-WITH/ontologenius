@@ -1,6 +1,6 @@
 #include "ontologenius/core/reasoner/plugins/ReasonerNone.h"
 
-#include <pluginlib/class_list_macros.h>
+#include <pluginlib/class_list_macros.hpp>
 
 namespace ontologenius {
 
@@ -27,11 +27,11 @@ std::string ReasonerNone::getName()
   return "reasoner none";
 }
 
-std::string ReasonerNone::getDesciption()
+std::string ReasonerNone::getDescription()
 {
   return "This is an reasoner model to show how to create your own reasoner plugin";
 }
 
-PLUGINLIB_EXPORT_CLASS(ReasonerNone, ReasonerInterface)
-
 } // namespace ontologenius
+
+PLUGINLIB_EXPORT_CLASS(ontologenius::ReasonerNone, ontologenius::ReasonerInterface)
